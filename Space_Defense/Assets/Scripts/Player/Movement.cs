@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour {
 
 		float speedModifier = basicSpeed;//Initialize speed modifier to the default speed value
 
-		if (Input.GetButton("Jet")){//If the "Jet" button is held, speed is increased (jet defined in Input manager as LEFT SHIFT
+		if (Input.GetButton("Jet")){//If the "Jet" button is held, speed is increased (jet defined in Input manager as LEFT SHIFT)
 			speedModifier = jetSpeed;
 		}
 

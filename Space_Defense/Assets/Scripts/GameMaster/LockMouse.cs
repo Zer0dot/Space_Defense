@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseConfine : MonoBehaviour {
-	
-	void Update () {
+public class LockMouse : MonoBehaviour {
+	void Update(){
 		if (Cursor.lockState == CursorLockMode.None){
 			Cursor.lockState = CursorLockMode.Locked;
 		}
