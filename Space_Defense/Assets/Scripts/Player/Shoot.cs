@@ -2,24 +2,43 @@
 using System.Collections;
 
 public class Shoot : MonoBehaviour {
+	
 	[SerializeField]private Material lineMaterial;
 	[SerializeField]private Transform shotStartPosition;//muzzle of the gun
 	[SerializeField]private float trailDuration = 0.1f;
 	[SerializeField]private float spreadRadius;
 	[SerializeField]private float range;
+	[SerializeField]private float fireCooldown;
+
+	private bool canFire = true;
 
 	void FixedUpdate () {
-		
-
-		if (Input.GetButton("Fire1")){
+		if (Input.GetButton("Fire1") && canFire ){
 			//Ray for center of the screen used from mouseposition
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition + new Vector3 (Random.Range (-spreadRadius, spreadRadius), Random.Range (-spreadRadius, spreadRadius), 0f));
-			//Need physics ray using ray origin and direction*range to calculate the actual ray hit
-			DrawLine(shotStartPosition.position, ray.direction*range + transform.position, lineMaterial, trailDuration);
-		}
+			Ray visualRay = Camera.main.ScreenPointToRay (Input.mousePosition + new Vector3 (Random.Range (-spreadRadius, spreadRadius), Random.Range (-spreadRadius, spreadRadius), 0f));
 
+			//Need physics Raycast using visualRay to determine whether there has been a hit
+			RaycastHit hit; 
+			bool hasHit = Physics.Raycast(visualRay, out hit, range);
+
+			if (hasHit){
+				DrawLine(shotStartPosition.position, hit.point, lineMaterial, trailDuration);
+			}
+			else{
+				DrawLine(shotStartPosition.position, visualRay.direction*range + transform.position, lineMaterial, trailDuration);
+			}
+
+			canFire = false;
+			StartCoroutine(ResetCooldown());
+		}
 	}
 
+
+	private IEnumerator ResetCooldown(){
+		yield return new WaitForSeconds(fireCooldown);
+		canFire = true;
+		
+	}
 	//Following function found through Answers, adapted to fit code and currently analyzing
 	//Sort of a "IT WORKS SO IT'S OK" situation right now 
 	void DrawLine(Vector3 start, Vector3 end, Material _lineMaterial, float duration = 0.2f){
@@ -31,6 +50,8 @@ public class Shoot : MonoBehaviour {
 		line.AddComponent<LineRenderer>();
 		LineRenderer lr = line.GetComponent<LineRenderer>();
 		lr.material = _lineMaterial;
+
+		lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
 		lr.useWorldSpace = false;
 
