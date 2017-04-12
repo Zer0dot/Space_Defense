@@ -2,13 +2,15 @@
 using System.Collections;
 
 public class Shoot : MonoBehaviour {
-	
-	[SerializeField]private Material lineMaterial;
+
+	//Not using a trail renderer as there is no actual projectile (hitscan), using a line renderer 
+	[SerializeField]private Material lineMaterial;//Material of the drawn bullet trail
 	[SerializeField]private Transform shotStartPosition;//muzzle of the gun
-	[SerializeField]private float trailDuration = 0.1f;
-	[SerializeField]private float spreadRadius;
-	[SerializeField]private float range;
-	[SerializeField]private float fireCooldown;
+	[SerializeField]private float trailDuration = 0.1f;//Duration the bullet trail remains
+	[SerializeField]private float spreadRadius;//Spread radius of shots
+	[SerializeField]private float range;//Range of shots
+	[SerializeField]private float fireCooldown;//Cooldown time between shots
+	[SerializeField]private float damage = 1;//Damage of shots
 
 	private bool canFire = true;
 
@@ -21,13 +23,23 @@ public class Shoot : MonoBehaviour {
 			RaycastHit hit; 
 			bool hasHit = Physics.Raycast(visualRay, out hit, range);
 
+
 			if (hasHit){
 				DrawLine(shotStartPosition.position, hit.point, lineMaterial, trailDuration);
+
+				GameObject hitObject = hit.collider.transform.root.gameObject;//Gets the root parent of the hit object
+				if (hitObject.tag == "Alien"){
+					
+					hitObject.SendMessage("Damage", damage);//Damages the hit alien
+
+				}
 			}
 			else{
+				//Draws line to end of range
 				DrawLine(shotStartPosition.position, visualRay.direction*range + transform.position, lineMaterial, trailDuration);
 			}
 
+			//Resets cooldown
 			canFire = false;
 			StartCoroutine(ResetCooldown());
 		}

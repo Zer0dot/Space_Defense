@@ -23,17 +23,14 @@ public class AlienPathing : MonoBehaviour {
 	}
 
 	void Update(){
-		MoveRotation(target);//When in FixedUpdate, the rotation is too slow
+		MoveRotation(target);//When in FixedUpdate, the rotation is too slow as it remains in physics iteration frames
 	}
 
 	void FixedUpdate(){
 		//nexusDistance = GetDistance(nexus);//Gets distance from nexus found to be obsolete
 		playerDistance = GetDistance(player);//Gets distance from player
 
-		//Checks if game is paused before executing movement, this is important because otherwise  when pausing the creature keeps a bit of momentum(?weird?)
-		if (Time.timeScale != 0f){
-			Movement(target);
-		}
+		Movement(target);//Alien keeps certain movement even when timescale is set to 0
 
 	}
 
