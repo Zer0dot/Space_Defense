@@ -6,7 +6,7 @@ public class AlienMain : MonoBehaviour {
 
 	public static List<Transform> enemies = new List<Transform>();//Used in tower targeting to select closest target among enemies
 
-	[SerializeField]private static int maxHealth = 100;
+	[SerializeField]private int maxHealth = 100;
 
 
 	private int currentHealth;

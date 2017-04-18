@@ -51,6 +51,7 @@ public class Shoot : MonoBehaviour {
 		canFire = true;
 		
 	}
+
 	//Following function found through Answers, adapted to fit code and currently analyzing
 	//Sort of a "IT WORKS SO IT'S OK" situation right now 
 	void DrawLine(Vector3 start, Vector3 end, Material _lineMaterial, float duration = 0.2f){
