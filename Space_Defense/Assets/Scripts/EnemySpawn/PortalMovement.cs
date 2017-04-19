@@ -6,7 +6,6 @@ public class PortalMovement : MonoBehaviour {
 
 	private Transform player;
 	[SerializeField]private float rotationIncrement = 0.2f;
-	[SerializeField]private float delay = 0.2f;
 
 	void Start(){
 		player = GameObject.FindWithTag("Player").transform;
@@ -14,7 +13,6 @@ public class PortalMovement : MonoBehaviour {
 	}
 
 	void Update(){
-		
-		transform.Rotate(-rotationIncrement*Vector3.forward*Time.deltaTime);
+		transform.Rotate(-rotationIncrement*Vector3.forward*Time.deltaTime);//Portal rotation effect
 	}
 }

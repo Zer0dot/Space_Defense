@@ -12,7 +12,15 @@ public class Shoot : MonoBehaviour {
 	[SerializeField]private float fireCooldown;//Cooldown time between shots
 	[SerializeField]private float damage = 1;//Damage of shots
 
+	public Animation animation;
+	private Animator anim;//The animator
+
 	private bool canFire = true;
+
+	void Start(){
+		anim = GetComponent<Animator>();
+		Debug.Log(animation.clip.length);
+	}
 
 	void FixedUpdate () {
 		if (Input.GetButton("Fire1") && canFire ){
@@ -32,6 +40,7 @@ public class Shoot : MonoBehaviour {
 					
 					hitObject.SendMessage("Damage", damage);//Damages the hit alien
 
+
 				}
 			}
 			else{
@@ -42,8 +51,10 @@ public class Shoot : MonoBehaviour {
 			//Resets cooldown
 			canFire = false;
 			StartCoroutine(ResetCooldown());
+			anim.Play("Recoil");
 		}
 	}
+
 
 
 	private IEnumerator ResetCooldown(){
