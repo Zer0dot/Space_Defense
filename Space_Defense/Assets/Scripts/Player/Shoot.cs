@@ -10,12 +10,22 @@ public class Shoot : MonoBehaviour {
 	[SerializeField]private float spreadRadius;//Spread radius of shots
 	[SerializeField]private float range;//Range of shots
 	[SerializeField]private float fireCooldown;//Cooldown time between shots
-	[SerializeField]private float damage = 1;//Damage of shots
+	public static int damage = 5;//Damage of shots
 
 	public Animation animation;
 	private Animator anim;//The animator
 
 	private bool canFire = true;
+
+	public static void EditGunDamage(string operation, int quantity){
+		if (operation == "add"){
+			damage += quantity;
+		}else if (operation == "substract"){
+			damage -= quantity;
+		}
+	}
+
+
 
 	void Start(){
 		anim = GetComponent<Animator>();

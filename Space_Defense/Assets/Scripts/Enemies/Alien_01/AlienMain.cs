@@ -28,6 +28,9 @@ public class AlienMain : MonoBehaviour {
 
 	void Death(){
 		enemies.Remove(transform);
+
+		PlayerMain.EditMoney("add", Random.Range(10.5f, 15.5f));
+
 		Destroy(gameObject);
 	}
 

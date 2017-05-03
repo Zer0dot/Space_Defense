@@ -12,13 +12,14 @@ public class CreateTower : MonoBehaviour {
 
 	[SerializeField]private float distance;//Distance from the player to select the position and spawn a tower if possible
 	[SerializeField]private GameObject towerPrefab; //The tower prefab to instantiate
+	[SerializeField]private float cost = 30f;
 
 	void Start(){
 		player = GameObject.FindWithTag("Player").transform;//Gets player transform
 	}
 
 	void Update(){
-		if (Input.GetButtonUp("CreateTower")){//CreatTower is defined as "f" in Input Manager
+		if (Input.GetButtonUp("CreateTower") && PlayerMain.money >= cost){//CreateTower is defined as "f" in Input Manager
 			
 			position = distance*player.forward + player.position;
 			Debug.Log(position);
@@ -28,6 +29,7 @@ public class CreateTower : MonoBehaviour {
 			if (obstructions.Length == 0){
 				Debug.Log("Unobstructed");
 				Instantiate(towerPrefab, position, Quaternion.identity);
+				PlayerMain.EditMoney("substract", cost);
 			}
 
 

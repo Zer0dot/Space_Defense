@@ -10,7 +10,9 @@ public class TowerTarget: MonoBehaviour {
 	private Transform target;
 
 	[SerializeField]private Material turretLineMaterial;
-	[SerializeField]private int turretDamage = 1;
+
+	public static int turretDamage = 1;
+
 	[SerializeField]private float turretCooldown = 0.5f;
 	void Start(){
 		//target = GameObject.FindWithTag("Player").transform;
@@ -24,7 +26,14 @@ public class TowerTarget: MonoBehaviour {
 
 		}
 		//Debug.Log(AlienMain.enemies[0]);
+	}
 
+	public static void EditTurretDamage(string operation, int number){
+		if (operation == "add"){
+			turretDamage += number;
+		}else if (operation == "substract"){
+			turretDamage -= number;
+		}
 	}
 
 	private IEnumerator FireSequence(float _cooldown){

@@ -3,14 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pause : MonoBehaviour {
+	[SerializeField]private GameObject menuCanvas;
+	[SerializeField]private Behaviour lockScript;
 
+	void Start(){
+		Cursor.lockState = CursorLockMode.Locked;
+	}
 
 	//This also pauses when the player tabs out or just loses app focus in any other way than pressing ESC
 	void Update () {
-		if (Cursor.lockState == CursorLockMode.Locked){//Checks if the user's mouse is locked to see if the user is currently focused on the application
-			Time.timeScale = 1f;
-		}else{
-			Time.timeScale = 0f;
+		if (Input.GetButtonDown("Pause")){
+			if (Time.timeScale == 1f){
+				Time.timeScale = 0f;
+				menuCanvas.SetActive(true);
+				lockScript.enabled = false;
+				Cursor.lockState = CursorLockMode.None;
+			}else{
+				Time.timeScale = 1f;
+				menuCanvas.SetActive(false);
+				lockScript.enabled = true;
+				Cursor.lockState = CursorLockMode.Locked;
+				Debug.Log("lel");
+
+			}
+				
 		}
 	}
 }
