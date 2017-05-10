@@ -7,13 +7,14 @@ public class AlienPathing : MonoBehaviour {
 
 	[SerializeField]private float aggroDistance;//Distance from player at which alien will aggro
 	[SerializeField]private float speed;
-	[SerializeField]private float keepDistance;//Distance to keep from target (MUST be lower than aggroDistance)
+	[SerializeField]private float keepDistance = 8f;//Distance to keep from target (MUST be lower than aggroDistance)
 
-	private Transform target;//Either nexus or player
-	private Transform nexus;//nexus
-	private Transform player;//player
-	//private float nexusDistance;//Distance from enemy to nexus found to be obsolete
-	private float playerDistance;//Distance from enemy to player
+	//These public fields should only be accessed in the EnemyFire script attached to this gameObject
+	public Transform target;//Either nexus or player
+	public Transform nexus;//nexus
+	public Transform player;//player
+	public float nexusDistance;//Distance from enemy to nexus found to be obsolete
+	public float playerDistance;//Distance from enemy to player
 
 	void Start(){
 		nexus = GameObject.FindWithTag("Core").transform;//Gets Nexus transform
@@ -27,7 +28,7 @@ public class AlienPathing : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		//nexusDistance = GetDistance(nexus);//Gets distance from nexus found to be obsolete
+		nexusDistance = GetDistance(nexus);//Gets distance from nexus found to be obsolete
 		playerDistance = GetDistance(player);//Gets distance from player
 
 		Movement(target);//Alien keeps certain movement even when timescale is set to 0
